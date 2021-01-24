@@ -17,6 +17,7 @@ Future<String> loginApi(LoginModel data) async {
       setToken(token.token); //add preferences
       return token.token;
     } else {
+      print(response.statusCode);
       return null;
     }
   } catch (e) {

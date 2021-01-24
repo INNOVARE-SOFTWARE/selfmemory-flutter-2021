@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/views/memory.dart';
 
 import 'views/login.dart';
 
@@ -7,6 +8,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
+    MemoryPage.tag: (context) => MemoryPage()
   };
 
   @override

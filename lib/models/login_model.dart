@@ -5,7 +5,7 @@ class LoginModel {
   LoginModel({this.email, this.password});
 
   Map<String, dynamic> toMap() {
-    return {'username': email, 'password': password};
+    return {'email': email, 'password': password};
   }
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {

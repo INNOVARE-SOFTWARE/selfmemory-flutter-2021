@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:selfmemory_flutter/api/user.api.dart';
 import 'package:selfmemory_flutter/models/login_model.dart';
+import 'package:selfmemory_flutter/models/token_model.dart';
 import 'package:selfmemory_flutter/models/user.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 
@@ -26,8 +27,8 @@ class _LoginPageState extends State<LoginPage> {
       _showCircularProgressIndicator = true;
     });
     LoginModel newuser = LoginModel(email: email, password: password);
-    final User usr = (await loginApi(newuser)) as User;
-    if (usr != null) {
+    final String token = await loginApi(newuser);
+    if (token != null) {
       setState(() {
         _showCircularProgressIndicator = false;
       });
