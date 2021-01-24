@@ -9,7 +9,7 @@ import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 
 Future<String> loginApi(LoginModel data) async {
   try {
-    final response = await http.post(Global.url + '/user/login',
+    final response = await http.post(Global.url + '/users/login',
         headers: {"Content-Type": "application/json"},
         body: json.encode(data.toMap()));
     if (response.statusCode == 200) {

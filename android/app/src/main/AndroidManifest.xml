@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ar.com.innovare.selfmemory_flutter">
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
         android:label="selfmemory_flutter"
         android:icon="@mipmap/ic_launcher">
         <activity

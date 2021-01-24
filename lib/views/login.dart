@@ -21,11 +21,11 @@ class _LoginPageState extends State<LoginPage> {
   initState() {}
 
   //add login method
-  Future<User> loginasync(String username, String password) async {
+  Future<User> loginasync(String email, String password) async {
     setState(() {
       _showCircularProgressIndicator = true;
     });
-    LoginModel newuser = LoginModel(username: username, password: password);
+    LoginModel newuser = LoginModel(email: email, password: password);
     final User usr = (await loginApi(newuser)) as User;
     if (usr != null) {
       setState(() {
