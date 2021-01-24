@@ -12,6 +12,7 @@ dependencies:
   shared_preferences:
   fluttertoast:
   path:
+  http:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
