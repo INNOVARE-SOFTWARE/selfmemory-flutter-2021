@@ -5,6 +5,7 @@ import 'package:selfmemory_flutter/models/login_model.dart';
 import 'package:selfmemory_flutter/models/token_model.dart';
 import 'package:selfmemory_flutter/models/user.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
+import 'package:selfmemory_flutter/views/navigator.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page'; //for routes
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _showCircularProgressIndicator = false;
       });
-      Navigator.of(context).pushNamed(MemoryPage.tag);
+      Navigator.of(context).pushNamed(NavigatorPage.tag);
     } else {
       Fluttertoast.showToast(
           msg: "Credenciales incorrectas",

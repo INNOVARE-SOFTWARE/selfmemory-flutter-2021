@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/views/chapter.dart';
+import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
+import 'package:selfmemory_flutter/views/navigator.dart';
 
 import 'views/login.dart';
 
@@ -8,7 +11,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-    MemoryPage.tag: (context) => MemoryPage()
+    NavigatorPage.tag: (context) => NavigatorPage(),
+    MemoryPage.tag: (context) => MemoryPage(),
+    ChapterPage.tag: (context) => ChapterPage(),
+    ConfigPage.tag: (context) => ConfigPage()
   };
 
   @override
@@ -20,7 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         fontFamily: 'Roboto',
       ),
-      home: LoginPage(), //change
+      home: LoginPage(),
+      //change
       routes: routes,
     );
   }

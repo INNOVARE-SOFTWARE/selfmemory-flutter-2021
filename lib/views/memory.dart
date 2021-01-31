@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/views/chapter.dart';
+import 'package:selfmemory_flutter/views/config.dart';
 
 class MemoryPage extends StatefulWidget {
   static String tag = 'memory-page'; //for routes
@@ -10,7 +12,6 @@ class MemoryPage extends StatefulWidget {
 class _MemoryPageState extends State<MemoryPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(body: Text("Config"));
   }
 }
