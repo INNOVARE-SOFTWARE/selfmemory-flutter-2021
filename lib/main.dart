@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
@@ -17,6 +18,15 @@ class MyApp extends StatelessWidget {
     ConfigPage.tag: (context) => ConfigPage()
   };
 
+  Future<Widget> _CheckInit(context) async {
+    final String token = await getToken();
+    if (!token.isEmpty) {
+      return NavigatorPage();
+    } else {
+      return LoginPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +36,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         fontFamily: 'Roboto',
       ),
-      home: LoginPage(),
+      home: FutureBuilder<Widget>(
+          future: _CheckInit(context),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            return snapshot.hasData
+                ? snapshot.data
+                : Center(
+                    child: CircularProgressIndicator(
+                    valueColor:
+                        new AlwaysStoppedAnimation<Color>(Colors.grey),
+                  ));
+          }),
       //change
       routes: routes,
     );
