@@ -9,9 +9,9 @@ import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 //get memory created or saved
 Future<Memory> createOrReadMemory(String userid) async {
   final response =
-      await http.get(Global.url + 'memories/user/' + userid, headers: {
+      await http.get(Global.url + '/memories/user/' + userid, headers: {
     "Content-Type": "application/json",
-    "Authorization": await getToken() //for user auth
+    "Authorization": 'Bearer '+  await getToken() //for user auth
   });
   if (response.statusCode == 200) {
     try {
@@ -27,9 +27,9 @@ Future<Memory> createOrReadMemory(String userid) async {
 //get all chapters from user memory
 Future<List<Chapter>> getChapters(String memoryId) async {
   final response = await http
-      .get(Global.url + 'memories/' + memoryId + '/chapters', headers: {
+      .get(Global.url + '/memories/' + memoryId + '/chapters', headers: {
     "Content-Type": "application/json",
-    "Authorization": await getToken() //for user auth
+    "Authorization":  'Bearer '+  await getToken() //for user auth
   });
   if (response.statusCode == 200) {
     try {

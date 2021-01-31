@@ -4,6 +4,7 @@ import 'package:selfmemory_flutter/api/user.api.dart';
 import 'package:selfmemory_flutter/models/login_model.dart';
 import 'package:selfmemory_flutter/models/token_model.dart';
 import 'package:selfmemory_flutter/models/user.dart';
+import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 import 'package:selfmemory_flutter/views/navigator.dart';
 
@@ -30,10 +31,16 @@ class _LoginPageState extends State<LoginPage> {
     LoginModel newuser = LoginModel(email: email, password: password);
     final String token = await loginApi(newuser);
     if (token != null) {
-      setState(() {
-        _showCircularProgressIndicator = false;
-      });
-      Navigator.of(context).pushNamed(NavigatorPage.tag);
+      print(await getToken());
+      final user = await whoAmI();
+      if (user != null) {
+        setState(() {
+          _showCircularProgressIndicator = false;
+        });
+        Navigator.of(context).pushNamed(NavigatorPage.tag);
+      }else{
+        return null;
+      }
     } else {
       Fluttertoast.showToast(
           msg: "Credenciales incorrectas",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/api/user.api.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
@@ -21,7 +22,12 @@ class MyApp extends StatelessWidget {
   Future<Widget> _CheckInit(context) async {
     final String token = await getToken();
     if (!token.isEmpty) {
-      return NavigatorPage();
+      final user = await whoAmI();
+      if (user != null) {
+        return NavigatorPage();
+      } else {
+        return LoginPage();
+      }
     } else {
       return LoginPage();
     }
@@ -44,8 +50,7 @@ class MyApp extends StatelessWidget {
                 ? snapshot.data
                 : Center(
                     child: CircularProgressIndicator(
-                    valueColor:
-                        new AlwaysStoppedAnimation<Color>(Colors.grey),
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.grey),
                   ));
           }),
       //change

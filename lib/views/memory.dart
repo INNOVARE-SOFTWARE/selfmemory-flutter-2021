@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:selfmemory_flutter/api/memory.api.dart';
+import 'package:selfmemory_flutter/models/memory_model.dart';
+import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 
@@ -12,6 +16,37 @@ class MemoryPage extends StatefulWidget {
 class _MemoryPageState extends State<MemoryPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
+  var _showCircularProgressIndicator = false;
+
+  @override
+  initState() {
+    loadMyMemory(); //call init state
+  }
+
+  Future<Memory> loadMyMemory() async {
+    setState(() {
+      _showCircularProgressIndicator = true;
+    });
+    Memory memory = await createOrReadMemory(await getUserId());
+    if (memory != null) {
+      setState(() { //important!
+        _showCircularProgressIndicator = false;
+        //fill data
+        this.titleController.text = memory.title;
+        this.subtitleController.text = memory.subtitle;
+      });
+    } else {
+      Fluttertoast.showToast(
+          msg: "Imposible obtener datos",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey[800],
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +78,8 @@ class _MemoryPageState extends State<MemoryPage> {
         onPressed: () {
           //save here
         },
-        child: Text('Guardar', style: TextStyle(color: Colors.white)),
+        child: Text('Guardar',
+            style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -54,6 +90,16 @@ class _MemoryPageState extends State<MemoryPage> {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
+            new Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                _showCircularProgressIndicator
+                    ? CircularProgressIndicator()
+                    : Container(),
+              ],
+            ),
             Text("Actualiza tu libro",
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -65,7 +111,8 @@ class _MemoryPageState extends State<MemoryPage> {
             SizedBox(height: 8.0),
             subtitle,
             SizedBox(height: 24.0),
-            saveButton
+            saveButton,
+
           ],
         ),
       ),
