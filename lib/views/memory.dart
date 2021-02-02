@@ -29,6 +29,7 @@ class _MemoryPageState extends State<MemoryPage> {
     });
     Memory memory = await createOrReadMemory(await getUserId());
     if (memory != null) {
+      await setMemoryId(memory.id);
       setState(() { //important!
         _showCircularProgressIndicator = false;
         //fill data
@@ -75,6 +76,10 @@ class _MemoryPageState extends State<MemoryPage> {
     final saveButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[700], // background
+          onPrimary: Colors.white, // foreground
+        ),
         onPressed: () {
           //save here
         },

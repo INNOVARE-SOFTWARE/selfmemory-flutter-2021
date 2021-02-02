@@ -19,3 +19,13 @@ Future<bool> setUserId(String value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.setString("userid", value);
 }
+
+Future<String> getMemoryId() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString("memoryid") ?? "";
+}
+
+Future<bool> setMemoryId(String value) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.setString("memoryid", value);
+}
