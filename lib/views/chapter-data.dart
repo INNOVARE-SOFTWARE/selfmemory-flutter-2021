@@ -1,91 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:selfmemory_flutter/api/memory.api.dart';
+import 'package:selfmemory_flutter/models/chapter_model.dart';
 import 'package:selfmemory_flutter/models/memory_model.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 
-class MemoryPage extends StatefulWidget {
-  static String tag = 'memory-page'; //for routes
+class ChapterDataForm extends StatefulWidget {
+  static String tag = 'chapter-data-form'; //for routes
 
   @override
-  _MemoryPageState createState() => _MemoryPageState();
+  _ChapterDataForm createState() => _ChapterDataForm();
 }
 
-class _MemoryPageState extends State<MemoryPage> {
+class _ChapterDataForm extends State<ChapterDataForm> {
   TextEditingController titleController = TextEditingController();
-  TextEditingController subtitleController = TextEditingController();
+  TextEditingController textController = TextEditingController();
   var _showCircularProgressIndicator = false;
-  var memory = new Memory();
+  var chapter = new Chapter();
 
   @override
-  initState() {
-    loadMyMemory(); //call init state
-  }
-
-  Future<Memory> loadMyMemory() async {
-    setState(() {
-      _showCircularProgressIndicator = true;
-    });
-    this.memory = await createOrReadMemory(await getUserId());
-    if (this.memory != null) {
-      await setMemoryId(this.memory.id);
-      setState(() {
-        //important!
-        _showCircularProgressIndicator = false;
-        //fill data
-        this.titleController.text = this.memory.title;
-        this.subtitleController.text = this.memory.subtitle;
-      });
-    } else {
-      Fluttertoast.showToast(
-          msg: "Imposible obtener datos",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey[800],
-          textColor: Colors.white,
-          fontSize: 16.0);
-      return null;
-    }
-  }
-
-  Future<Memory> saveMyMemory() async {
-    setState(() {
-      _showCircularProgressIndicator = true;
-    });
-    this.memory.title = this.titleController.text;
-    this.memory.subtitle = this.subtitleController.text;
-
-    var result = await saveMemory(this.memory);
-    if (result) {
-      setState(() {
-        //important!
-        _showCircularProgressIndicator = false;
-      });
-      Fluttertoast.showToast(
-          msg: "Datos almacenados",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    } else {
-      setState(() {
-        _showCircularProgressIndicator = false;
-      });
-      Fluttertoast.showToast(
-          msg: "Imposible editar",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey[800],
-          textColor: Colors.white,
-          fontSize: 16.0);
-    }
-  }
+  initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -100,10 +36,11 @@ class _MemoryPageState extends State<MemoryPage> {
       ),
     );
 
-    final subtitle = TextFormField(
+    final text = TextFormField(
       keyboardType: TextInputType.text,
       autofocus: false,
-      controller: subtitleController,
+      maxLines: 8,
+      controller: titleController,
       decoration: InputDecoration(
         hintText: 'SubTítulo',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -118,9 +55,7 @@ class _MemoryPageState extends State<MemoryPage> {
           primary: Colors.grey[700], // background
           onPrimary: Colors.white, // foreground
         ),
-        onPressed: () {
-          this.saveMyMemory();
-        },
+        onPressed: () {},
         child: Text('Guardar', style: TextStyle(color: Colors.white)),
       ),
     );
@@ -142,7 +77,7 @@ class _MemoryPageState extends State<MemoryPage> {
                     : Container(),
               ],
             ),
-            Text("Actualiza tu libro",
+            Text("Escribe tus memorias",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -151,7 +86,7 @@ class _MemoryPageState extends State<MemoryPage> {
             SizedBox(height: 18.0),
             title,
             SizedBox(height: 8.0),
-            subtitle,
+            text,
             SizedBox(height: 24.0),
             saveButton,
           ],

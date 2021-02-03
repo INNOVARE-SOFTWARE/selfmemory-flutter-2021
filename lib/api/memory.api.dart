@@ -11,7 +11,7 @@ Future<Memory> createOrReadMemory(String userid) async {
   final response =
       await http.get(Global.url + '/memories/user/' + userid, headers: {
     "Content-Type": "application/json",
-    "Authorization": 'Bearer '+  await getToken() //for user auth
+    "Authorization": 'Bearer ' + await getToken() //for user auth
   });
   if (response.statusCode == 200) {
     try {
@@ -24,12 +24,32 @@ Future<Memory> createOrReadMemory(String userid) async {
   }
 }
 
+//save memory
+Future<bool> saveMemory(Memory memory) async {
+  final response = await http.patch(Global.url + '/memories/' + memory.id,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": 'Bearer ' + await getToken() //for user auth
+      },
+      body: jsonEncode({
+        'id': memory.id,
+        'title': memory.title,
+        'subtitle': memory.subtitle
+      }));
+  if (response.statusCode == 204) {
+    print('ok');
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //get all chapters from user memory
 Future<List<Chapter>> getChapters(String memoryId) async {
   final response = await http
       .get(Global.url + '/memories/' + memoryId + '/chapters', headers: {
     "Content-Type": "application/json",
-    "Authorization":  'Bearer '+  await getToken() //for user auth
+    "Authorization": 'Bearer ' + await getToken() //for user auth
   });
   if (response.statusCode == 200) {
     try {

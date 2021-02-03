@@ -5,8 +5,8 @@ part 'memory_model.g.dart';
 @JsonSerializable()
 class Memory {
   final String id;
-  final String title;
-  final String subtitle;
+  String title;
+  String subtitle;
   final String userId;
   final DateTime created;
 

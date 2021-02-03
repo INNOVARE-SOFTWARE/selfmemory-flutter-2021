@@ -1,16 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/api/memory.api.dart';
+import 'package:selfmemory_flutter/models/chapter_model.dart';
+import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
+import 'package:selfmemory_flutter/views/chapter-list.dart';
 
+//
 class ChapterPage extends StatefulWidget {
   static String tag = 'chapter-page'; //for routes
-
   @override
   _ChapterPageState createState() => _ChapterPageState();
 }
 
 class _ChapterPageState extends State<ChapterPage> {
   @override
+  initState() {}
+
+  Future<List<Chapter>> loadChapters() async {
+    var memoryid = await getMemoryId();
+    return await getChapters(memoryid);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final newButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[700], // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {},
+        child: Text('Nuevo Capítulo', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
     return Scaffold(
-        body: Text("Chapter"));
+        body: Column(children: <Widget>[
+      newButton,
+      new Divider(
+        color: Colors.grey,
+      ),
+      Padding(
+        child: FutureBuilder<List<Chapter>>(
+          future: loadChapters(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) print(snapshot.error);
+            //
+            return snapshot.hasData
+                ? ChapterList(data: snapshot.data)
+                : Center(
+                    child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.grey),
+                  ));
+          },
+        ),
+        padding: EdgeInsets.only(left: 10, right: 10),
+      ),
+    ]));
   }
 }
