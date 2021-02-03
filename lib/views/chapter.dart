@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:selfmemory_flutter/api/memory.api.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
+import 'package:selfmemory_flutter/views/chapter-data.dart';
 import 'package:selfmemory_flutter/views/chapter-list.dart';
 
 //
@@ -29,7 +30,12 @@ class _ChapterPageState extends State<ChapterPage> {
           primary: Colors.grey[700], // background
           onPrimary: Colors.white, // foreground
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ChapterDataForm()),
+          );
+        },
         child: Text('Nuevo Capítulo', style: TextStyle(color: Colors.white)),
       ),
     );

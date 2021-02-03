@@ -42,7 +42,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
       maxLines: 8,
       controller: titleController,
       decoration: InputDecoration(
-        hintText: 'SubTítulo',
+        hintText: 'Mis letras aquí',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
       ),
@@ -57,6 +57,20 @@ class _ChapterDataForm extends State<ChapterDataForm> {
         ),
         onPressed: () {},
         child: Text('Guardar', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+    final backButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[400], // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text('Volver', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -89,6 +103,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
             text,
             SizedBox(height: 24.0),
             saveButton,
+            backButton
           ],
         ),
       ),
