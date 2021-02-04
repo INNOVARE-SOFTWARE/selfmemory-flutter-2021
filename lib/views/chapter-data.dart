@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:selfmemory_flutter/api/memory.api.dart';
+import 'package:selfmemory_flutter/api/chapter.api.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
-import 'package:selfmemory_flutter/models/memory_model.dart';
-import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
-import 'package:selfmemory_flutter/views/chapter.dart';
-import 'package:selfmemory_flutter/views/config.dart';
 
 class ChapterDataForm extends StatefulWidget {
   static String tag = 'chapter-data-form'; //for routes
+  var chapter = new Chapter();
+  var memoryId = '';
+
+  ChapterDataForm({Key key, this.chapter, this.memoryId})
+      : super(key: key); //constructor
 
   @override
   _ChapterDataForm createState() => _ChapterDataForm();
@@ -18,10 +19,84 @@ class _ChapterDataForm extends State<ChapterDataForm> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   var _showCircularProgressIndicator = false;
-  var chapter = new Chapter();
 
   @override
-  initState() {}
+  initState() {
+    //for edit
+    this.titleController.text =
+        this.widget.chapter != null ? this.widget.chapter.title : '';
+    this.textController.text =
+        this.widget.chapter != null ? this.widget.chapter.text : '';
+    if (this.widget.chapter == null) this.widget.chapter = new Chapter();
+  }
+
+  Future<void> saveChapter() async {
+    setState(() {
+      _showCircularProgressIndicator = true;
+    });
+    this.widget.chapter.text = this.textController.text;
+    this.widget.chapter.title = this.titleController.text;
+    this.widget.chapter.memoryId = this.widget.memoryId; //
+
+    print(this.widget.chapter.memoryId);
+    var result;
+
+    if (this.widget.chapter.id != null) {
+      result = await updateChapter(this.widget.chapter);
+    } else {
+      result = await createChapter(this.widget.chapter);
+    }
+    if (result != null) {
+      setState(() {
+        //important!
+        _showCircularProgressIndicator = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Datos almacenados",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      setState(() {
+        _showCircularProgressIndicator = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Imposible guardar",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey[800],
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
+  Future<void> removeChapter() async {
+    setState(() {
+      _showCircularProgressIndicator = true;
+    });
+    var result;
+    if (this.widget.chapter.id != null) {
+      result = await deleteChapter(this.widget.chapter);
+    }
+    if (result != null) {
+      setState(() {
+        //important!
+        _showCircularProgressIndicator = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Datos eliminados",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +115,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
       keyboardType: TextInputType.text,
       autofocus: false,
       maxLines: 8,
-      controller: titleController,
+      controller: textController,
       decoration: InputDecoration(
         hintText: 'Mis letras aquí',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -49,28 +124,45 @@ class _ChapterDataForm extends State<ChapterDataForm> {
     );
 
     final saveButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 1.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.grey[700], // background
           onPrimary: Colors.white, // foreground
         ),
-        onPressed: () {},
+        onPressed: () {
+          this.saveChapter();
+        },
         child: Text('Guardar', style: TextStyle(color: Colors.white)),
       ),
     );
 
     final backButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 1.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.grey[400], // background
           onPrimary: Colors.white, // foreground
         ),
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pop(context); //POP
         },
         child: Text('Volver', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+    final removeButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 1.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[400], // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {
+          this.removeChapter();
+          Navigator.pop(context); //POP
+        },
+        child: Text('Eliminar', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -103,6 +195,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
             text,
             SizedBox(height: 24.0),
             saveButton,
+            removeButton,
             backButton
           ],
         ),

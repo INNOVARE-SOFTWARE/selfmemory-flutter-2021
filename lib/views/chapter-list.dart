@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
 
+import 'chapter-data.dart';
+
 class ChapterList extends StatelessWidget {
   final List<Chapter> data;
 
@@ -14,19 +16,16 @@ class ChapterList extends StatelessWidget {
     return data == null || data.isEmpty
         ? Center(child: Text('Sin Datos'))
         : ListView.builder(
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: data.length,
             itemBuilder: (context, index) {
               return Column(
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    margin: new EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 10.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        ListTile(
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
                           title: new Text(
                             (index + 1).toString() + ' - ' + data[index].title,
                             style: new TextStyle(
@@ -38,16 +37,19 @@ class ChapterList extends StatelessWidget {
                               icon: const Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 color: Colors.grey,
-                                size: 35,
+                                size: 30,
                               ),
                               onPressed: () {
-                                //navigate
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChapterDataForm(
+                                          chapter: data[index],
+                                          memoryId: data[index].memoryId)),
+                                ).then((value) {});
                               }),
-                          isThreeLine: false,
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
+                          isThreeLine: false),
+                    ],
                   ),
                 ],
               );

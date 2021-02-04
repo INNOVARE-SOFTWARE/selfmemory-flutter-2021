@@ -5,9 +5,9 @@ part 'chapter_model.g.dart';
 @JsonSerializable()
 class Chapter {
   final String id;
-  final String title;
-  final String text;
-  final String memoryId;
+  String title;
+  String text;
+  String memoryId;
 
   Chapter({this.id, this.title, this.text, this.memoryId});
 
