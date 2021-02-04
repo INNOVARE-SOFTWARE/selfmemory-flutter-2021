@@ -4,8 +4,8 @@ part 'config_model.g.dart';
 @JsonSerializable()
 class Config {
   final String id;
-  final String email1;
-  final String email2;
+  String email1;
+  String email2;
   final String userId;
 
 

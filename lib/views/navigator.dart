@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
@@ -26,7 +27,8 @@ class _NavigatorPageState extends State<NavigatorPage> {
     }
   }
 
-  Future<bool> _onWillPop() { //async
+  Future<bool> _onWillPop() {
+    //async
     return showDialog(
           context: context,
           builder: (context) => new AlertDialog(
@@ -40,8 +42,11 @@ class _NavigatorPageState extends State<NavigatorPage> {
                 child: new Text('No'),
               ),
               new TextButton(
-                onPressed: () {
-                  //logic here
+                onPressed: () async {
+                  await setToken(null);
+                  await setMemoryId(null);
+                  await setUserId(null);
+                  Navigator.of(context).pushNamed("/login-page");
                 },
                 child: new Text('Si'),
               )
@@ -70,7 +75,8 @@ class _NavigatorPageState extends State<NavigatorPage> {
           ),
           body: _getBody(index),
           bottomNavigationBar: BottomNavigationBar(
-            key: globalKey, // KEY!!
+            key: globalKey,
+            // KEY!!
             type: BottomNavigationBarType.fixed,
             onTap: (value) => setState(() => index = value),
             items: const <BottomNavigationBarItem>[

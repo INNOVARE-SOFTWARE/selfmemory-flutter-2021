@@ -52,7 +52,6 @@ Future<bool> deleteChapter(Chapter chapter) async {
     "Authorization": 'Bearer ' + await getToken() //for user auth
   });
   if (response.statusCode == 204) {
-    print('ok');
     return true;
   } else {
     return false;

@@ -78,6 +78,35 @@ class _ChapterDataForm extends State<ChapterDataForm> {
     }
   }
 
+  checkIfDelete() {
+    return showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Estás seguro?'),
+            content: new Text('Quieres eliminar el Capítulo?'),
+            actions: <Widget>[
+              new TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);  //for popup
+                },
+                child: new Text('No'),
+              ),
+              new TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); //for popup
+                  //
+                  this.removeChapter();
+                  navigationBar.onTap(1); //reload
+                  Navigator.pop(context); //POP for this class
+                },
+                child: new Text('Si'),
+              )
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   Future<void> removeChapter() async {
     setState(() {
       _showCircularProgressIndicator = true;
@@ -135,7 +164,8 @@ class _ChapterDataForm extends State<ChapterDataForm> {
         ),
         onPressed: () {
           this.saveChapter();
-          navigationBar.onTap(1);
+          Navigator.pop(context);
+          navigationBar.onTap(1); //other widget in tree
         },
         child: Text('Guardar', style: TextStyle(color: Colors.white)),
       ),
@@ -158,18 +188,18 @@ class _ChapterDataForm extends State<ChapterDataForm> {
 
     final removeButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 1.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.red[400], // background
-          onPrimary: Colors.white, // foreground
-        ),
-        onPressed: () {
-          this.removeChapter();
-          navigationBar.onTap(1);
-          Navigator.pop(context,true); //POP
-        },
-        child: Text('Eliminar', style: TextStyle(color: Colors.white)),
-      ),
+      child: Visibility(
+          visible: this.widget.chapter.id != null,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.red[400], // background
+              onPrimary: Colors.white, // foreground
+            ),
+            onPressed: () {
+              checkIfDelete();
+            },
+            child: Text('Eliminar', style: TextStyle(color: Colors.white)),
+          )),
     );
 
     return Scaffold(
