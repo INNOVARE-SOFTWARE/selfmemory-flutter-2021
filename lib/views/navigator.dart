@@ -3,6 +3,8 @@ import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 
+GlobalKey globalKey = new GlobalKey(debugLabel: 'app_bar');
+
 class NavigatorPage extends StatefulWidget {
   static String tag = 'nav-page'; //for routes
 
@@ -68,6 +70,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
           ),
           body: _getBody(index),
           bottomNavigationBar: BottomNavigationBar(
+            key: globalKey, // KEY!!
             type: BottomNavigationBarType.fixed,
             onTap: (value) => setState(() => index = value),
             items: const <BottomNavigationBarItem>[

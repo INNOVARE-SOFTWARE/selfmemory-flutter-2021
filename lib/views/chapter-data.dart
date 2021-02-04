@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:selfmemory_flutter/api/chapter.api.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
 
+import 'navigator.dart';
+
 class ChapterDataForm extends StatefulWidget {
   static String tag = 'chapter-data-form'; //for routes
   var chapter = new Chapter();
@@ -19,9 +21,11 @@ class _ChapterDataForm extends State<ChapterDataForm> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   var _showCircularProgressIndicator = false;
+  BottomNavigationBar navigationBar;
 
   @override
   initState() {
+    navigationBar = globalKey.currentWidget;
     //for edit
     this.titleController.text =
         this.widget.chapter != null ? this.widget.chapter.title : '';
@@ -84,7 +88,6 @@ class _ChapterDataForm extends State<ChapterDataForm> {
     }
     if (result != null) {
       setState(() {
-        //important!
         _showCircularProgressIndicator = false;
       });
       Fluttertoast.showToast(
@@ -92,7 +95,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
     }
@@ -132,6 +135,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
         ),
         onPressed: () {
           this.saveChapter();
+          navigationBar.onTap(1);
         },
         child: Text('Guardar', style: TextStyle(color: Colors.white)),
       ),
@@ -146,6 +150,7 @@ class _ChapterDataForm extends State<ChapterDataForm> {
         ),
         onPressed: () {
           Navigator.pop(context); //POP
+          navigationBar.onTap(1);
         },
         child: Text('Volver', style: TextStyle(color: Colors.white)),
       ),
@@ -160,7 +165,8 @@ class _ChapterDataForm extends State<ChapterDataForm> {
         ),
         onPressed: () {
           this.removeChapter();
-          Navigator.pop(context); //POP
+          navigationBar.onTap(1);
+          Navigator.pop(context,true); //POP
         },
         child: Text('Eliminar', style: TextStyle(color: Colors.white)),
       ),

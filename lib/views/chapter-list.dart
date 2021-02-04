@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
-
 import 'chapter-data.dart';
 
 class ChapterList extends StatelessWidget {
@@ -46,7 +42,9 @@ class ChapterList extends StatelessWidget {
                                       builder: (context) => ChapterDataForm(
                                           chapter: data[index],
                                           memoryId: data[index].memoryId)),
-                                ).then((value) {});
+                                ).then((value) {
+
+                                });
                               }),
                           isThreeLine: false),
                     ],

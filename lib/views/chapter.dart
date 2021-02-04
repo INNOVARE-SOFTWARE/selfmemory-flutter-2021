@@ -5,6 +5,8 @@ import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter-data.dart';
 import 'package:selfmemory_flutter/views/chapter-list.dart';
 
+import 'navigator.dart';
+
 class ChapterPage extends StatefulWidget {
   static String tag = 'chapter-page'; //for routes
   @override
@@ -12,9 +14,11 @@ class ChapterPage extends StatefulWidget {
 }
 
 class _ChapterPageState extends State<ChapterPage> {
-  @override
-  initState() {}
   String memoryid = '';
+
+  @override
+  initState() {
+  }
 
   Future<List<Chapter>> loadChapters() async {
     this.memoryid = await getMemoryId();
@@ -36,7 +40,8 @@ class _ChapterPageState extends State<ChapterPage> {
             MaterialPageRoute(
                 builder: (context) => ChapterDataForm(
                     chapter: new Chapter(), memoryId: this.memoryid)),
-          ).then((value) { //callback
+          ).then((value) {
+            //callback
             setState(() {
               loadChapters();
             });
