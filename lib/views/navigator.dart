@@ -78,8 +78,7 @@ class _NavigatorPageState extends State<NavigatorPage> {
           ),
           body: _getBody(index),
           bottomNavigationBar: BottomNavigationBar(
-            key: globalKey,
-            // KEY!!
+            key: globalKey, // KEY!!
             type: BottomNavigationBarType.fixed,
             onTap: (value) => setState(() => index = value),
             items: const <BottomNavigationBarItem>[

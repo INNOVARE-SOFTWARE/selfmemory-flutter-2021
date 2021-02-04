@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.grey[600],
           textColor: Colors.white,
           fontSize: 16.0);
       return null;
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       tag: 'logo',
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 48.0,
+        radius: 40.0,
         child: Image.asset('assets/images/logo.png'),
       ),
     );
@@ -90,6 +90,10 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey[700], // background
+          onPrimary: Colors.white, // foreground
+        ),
         onPressed: () {
           if (email.controller.text.length > 0 &&
               password.controller.text.length > 0) {

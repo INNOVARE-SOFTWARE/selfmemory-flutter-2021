@@ -89,6 +89,15 @@ class _MemoryPageState extends State<MemoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final logo = Hero(
+      tag: 'logo',
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 40.0,
+        child: Image.asset('assets/images/logo.png'),
+      ),
+    );
+
     final title = TextFormField(
       keyboardType: TextInputType.text,
       autofocus: false,
@@ -142,6 +151,7 @@ class _MemoryPageState extends State<MemoryPage> {
                     : Container(),
               ],
             ),
+            logo,
             Text("Actualiza tu libro",
                 textAlign: TextAlign.center,
                 style: TextStyle(
