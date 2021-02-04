@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
+import 'package:selfmemory_flutter/views/login.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 
 GlobalKey globalKey = new GlobalKey(debugLabel: 'app_bar');
@@ -46,8 +47,10 @@ class _NavigatorPageState extends State<NavigatorPage> {
                   await setToken(null);
                   await setMemoryId(null);
                   await setUserId(null);
-                  Navigator.of(context).pushNamed("/login-page");
-                },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );                },
                 child: new Text('Si'),
               )
             ],
