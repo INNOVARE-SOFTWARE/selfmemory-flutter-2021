@@ -5,6 +5,7 @@ import 'package:selfmemory_flutter/views/chapter.dart';
 import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 import 'package:selfmemory_flutter/views/navigator.dart';
+import 'package:selfmemory_flutter/views/signup.dart';
 
 import 'views/login.dart';
 
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
     NavigatorPage.tag: (context) => NavigatorPage(),
     MemoryPage.tag: (context) => MemoryPage(),
     ChapterPage.tag: (context) => ChapterPage(),
-    ConfigPage.tag: (context) => ConfigPage()
+    ConfigPage.tag: (context) => ConfigPage(),
+    SignupPage.tag: (context) => SignupPage()
   };
 
   Future<Widget> _CheckInit(context) async {

@@ -7,6 +7,7 @@ import 'package:selfmemory_flutter/models/user.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 import 'package:selfmemory_flutter/views/navigator.dart';
+import 'package:selfmemory_flutter/views/signup.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page'; //for routes
@@ -88,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
+      padding: EdgeInsets.symmetric(vertical: 6.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.grey[700], // background
@@ -100,7 +101,22 @@ class _LoginPageState extends State<LoginPage> {
             this.loginasync(email.controller.text, password.controller.text);
           }
         },
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
+        child: Text('Ingresar', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+
+    final registerButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.red[700], // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(SignupPage.tag);
+        },
+        child: Text('Registrar', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -124,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
             password,
             SizedBox(height: 24.0),
             loginButton,
+            registerButton,
             new Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
