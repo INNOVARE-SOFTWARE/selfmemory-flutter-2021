@@ -23,8 +23,12 @@ class _SignupPagePageState extends State<SignupPage> {
   initState() {}
 
   //add login method
-  Future<User> signup(String email, String password, String firstname, String lastname) async {
-    if (email.length > 0 && password.length > 0 && firstname.length > 0 && lastname.length > 0) {
+  Future<User> signup(
+      String email, String password, String firstname, String lastname) async {
+    if (email.length > 0 &&
+        password.length > 0 &&
+        firstname.length > 0 &&
+        lastname.length > 0) {
       setState(() {
         _showCircularProgressIndicator = true;
       });
@@ -44,7 +48,7 @@ class _SignupPagePageState extends State<SignupPage> {
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.CENTER,
             timeInSecForIosWeb: 1,
-            backgroundColor: Colors.grey[600],
+            backgroundColor: Colors.green[600],
             textColor: Colors.white,
             fontSize: 16.0);
       } else {
@@ -61,7 +65,7 @@ class _SignupPagePageState extends State<SignupPage> {
             fontSize: 16.0);
         return null;
       }
-    }else{
+    } else {
       Fluttertoast.showToast(
           msg: "Error al registrar, Faltan Datos!!!",
           toastLength: Toast.LENGTH_SHORT,
@@ -111,7 +115,7 @@ class _SignupPagePageState extends State<SignupPage> {
       autofocus: false,
       controller: fisrtname_controller,
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: 'Nombre',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
       ),
@@ -122,7 +126,7 @@ class _SignupPagePageState extends State<SignupPage> {
       autofocus: false,
       controller: lastname_controller,
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: 'Apellido',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
       ),
@@ -136,11 +140,8 @@ class _SignupPagePageState extends State<SignupPage> {
           onPrimary: Colors.white, // foreground
         ),
         onPressed: () {
-          if (email.controller.text.length > 0 &&
-              password.controller.text.length > 0) {
-            this.signup(email.controller.text, password.controller.text,
-                firstname.controller.text, lastname.controller.text);
-          }
+          this.signup(email.controller.text, password.controller.text,
+              firstname.controller.text, lastname.controller.text);
         },
         child: Text('Registrar', style: TextStyle(color: Colors.white)),
       ),
