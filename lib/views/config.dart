@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:selfmemory_flutter/api/config.api.dart';
+import 'package:selfmemory_flutter/api/memory.api.dart';
 import 'package:selfmemory_flutter/models/config_model.dart';
 import 'package:selfmemory_flutter/preferences/shared_preferences.dart';
 
@@ -22,6 +23,38 @@ class _ConfigPageState extends State<ConfigPage> {
     loadMyConfig(); //call init state
   }
 
+  Future<Config> sendMyBook() async {
+    setState(() {
+      _showCircularProgressIndicator = true;
+    });
+    var send = await sendBook(await getUserId());
+    if (send != null) {
+      setState(() {
+        _showCircularProgressIndicator = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Mis Memorias enviadas",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey[800],
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      setState(() {
+        _showCircularProgressIndicator = false;
+      });
+      Fluttertoast.showToast(
+          msg: "Imposible enviar datos",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey[800],
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return null;
+    }
+  }
 
   Future<Config> loadMyConfig() async {
     setState(() {
@@ -124,6 +157,20 @@ class _ConfigPageState extends State<ConfigPage> {
       ),
     );
 
+    final shareButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green[700], // background
+          onPrimary: Colors.white, // foreground
+        ),
+        onPressed: () {
+          this.sendMyBook();
+        },
+        child: Text('Enviar Email', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Center(
@@ -153,6 +200,7 @@ class _ConfigPageState extends State<ConfigPage> {
             email2,
             SizedBox(height: 24.0),
             saveButton,
+            shareButton
           ],
         ),
       ),

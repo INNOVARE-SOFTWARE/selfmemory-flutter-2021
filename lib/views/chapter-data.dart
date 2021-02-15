@@ -41,8 +41,6 @@ class _ChapterDataForm extends State<ChapterDataForm> {
     this.widget.chapter.text = this.textController.text;
     this.widget.chapter.title = this.titleController.text;
     this.widget.chapter.memoryId = this.widget.memoryId; //
-
-    print(this.widget.chapter.memoryId);
     var result;
 
     if (this.widget.chapter.id != null) {
@@ -52,7 +50,6 @@ class _ChapterDataForm extends State<ChapterDataForm> {
     }
     if (result != null) {
       setState(() {
-        //important!
         _showCircularProgressIndicator = false;
       });
       Fluttertoast.showToast(

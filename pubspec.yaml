@@ -31,9 +31,10 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Roboto
+    - family: Anonymous
       fonts:
-        - asset: assets/fonts/Roboto-Bold.ttf
-        - asset: assets/fonts/Roboto-Regular.ttf
-        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Anonymous_Pro.ttf
+        - asset: assets/fonts/Anonymous_Pro_B.ttf
+        - asset: assets/fonts/Anonymous_Pro_BI.ttf
+        - asset: assets/fonts/Anonymous_Pro_I.ttf
           weight: 400

@@ -37,7 +37,6 @@ Future<bool> saveMemory(Memory memory) async {
         'subtitle': memory.subtitle
       }));
   if (response.statusCode == 204) {
-    print('ok');
     return true;
   } else {
     return false;
@@ -64,3 +63,23 @@ Future<List<Chapter>> getChapters(String memoryId) async {
     return null;
   }
 }
+
+//send book
+Future<Object> sendBook(String userId) async {
+  final response = await http
+      .get(Global.url + '/memories/book/' + userId, headers: {
+    "Content-Type": "application/json",
+    "Authorization": 'Bearer ' + await getToken() //for user auth
+  });
+  if (response.statusCode == 200) {
+    try {
+      var responseJson = json.decode(response.body);
+      return responseJson;
+    } catch (e) {
+      return null;
+    }
+  } else {
+    return null;
+  }
+}
+
