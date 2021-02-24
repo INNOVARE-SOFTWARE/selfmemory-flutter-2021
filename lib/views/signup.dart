@@ -26,7 +26,7 @@ class _SignupPagePageState extends State<SignupPage> {
   Future<User> signup(
       String email, String password, String firstname, String lastname) async {
     if (email.length > 0 &&
-        password.length > 0 &&
+        password.length > 7 &&
         firstname.length > 0 &&
         lastname.length > 0) {
       setState(() {
@@ -104,7 +104,7 @@ class _SignupPagePageState extends State<SignupPage> {
       obscureText: true,
       controller: password_controller,
       decoration: InputDecoration(
-        hintText: 'Password',
+        hintText: 'Password (8 mínimo)',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
       ),
