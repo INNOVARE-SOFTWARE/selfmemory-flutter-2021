@@ -38,8 +38,9 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _showCircularProgressIndicator = false;
         });
-        Navigator.of(context).pushNamed(NavigatorPage.tag);
-      }else{
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (BuildContext context) => NavigatorPage()));
+      } else {
         return null;
       }
     } else {
@@ -104,7 +105,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Text('Ingresar', style: TextStyle(color: Colors.white)),
       ),
     );
-
 
     final registerButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 0.0),

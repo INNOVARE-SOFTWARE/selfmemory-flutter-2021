@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:selfmemory_flutter/api/chapter.api.dart';
 import 'package:selfmemory_flutter/models/chapter_model.dart';
 
+import '../main.dart';
 import 'navigator.dart';
 
 class ChapterDataForm extends StatefulWidget {
@@ -21,11 +22,11 @@ class _ChapterDataForm extends State<ChapterDataForm> {
   TextEditingController titleController = TextEditingController();
   TextEditingController textController = TextEditingController();
   var _showCircularProgressIndicator = false;
-  BottomNavigationBar navigationBar;
+  BottomNavigationBar navigationBar = globalKey.currentWidget;
 
   @override
   initState() {
-    navigationBar = globalKey.currentWidget;
+    //navigationBar = globalKey.currentWidget;
     //for edit
     this.titleController.text =
         this.widget.chapter != null ? this.widget.chapter.title : '';

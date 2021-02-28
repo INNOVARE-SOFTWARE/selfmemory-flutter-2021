@@ -8,6 +8,7 @@ import 'package:selfmemory_flutter/views/navigator.dart';
 import 'package:selfmemory_flutter/views/signup.dart';
 
 import 'views/login.dart';
+final GlobalKey globalKey = GlobalKey(debugLabel: 'app_bar');
 
 void main() => runApp(MyApp());
 

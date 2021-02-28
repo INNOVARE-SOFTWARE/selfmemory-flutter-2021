@@ -5,7 +5,7 @@ import 'package:selfmemory_flutter/views/config.dart';
 import 'package:selfmemory_flutter/views/login.dart';
 import 'package:selfmemory_flutter/views/memory.dart';
 
-GlobalKey globalKey = new GlobalKey(debugLabel: 'app_bar');
+import '../main.dart';
 
 class NavigatorPage extends StatefulWidget {
   static String tag = 'nav-page'; //for routes
@@ -47,10 +47,13 @@ class _NavigatorPageState extends State<NavigatorPage> {
                   await setToken(null);
                   await setMemoryId(null);
                   await setUserId(null);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );                },
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => LoginPage(),
+                      ),
+                      ModalRoute.withName('/'));
+                },
                 child: new Text('Si'),
               )
             ],
@@ -78,7 +81,8 @@ class _NavigatorPageState extends State<NavigatorPage> {
           ),
           body: _getBody(index),
           bottomNavigationBar: BottomNavigationBar(
-            key: globalKey, // KEY!!
+            key: globalKey,
+            // KEY!!
             type: BottomNavigationBarType.fixed,
             onTap: (value) => setState(() => index = value),
             items: const <BottomNavigationBarItem>[
